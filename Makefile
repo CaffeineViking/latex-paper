@@ -31,5 +31,5 @@ clean:
 distclean: clean
 	rm -rf polyglot
 	rm -f $(name).pdf
-.PHONY: all view clean distclean
+.PHONY: all view polyglot clean distclean distribute
 FORCE:
