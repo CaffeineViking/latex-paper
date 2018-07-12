@@ -1,5 +1,6 @@
-name := paper
+name   := paper
 viewer := mupdf
+attach := attachments
 
 sections := $(wildcard sections/*.tex)
 
@@ -13,8 +14,19 @@ $(name).pdf: $(name).tex $(sections) $(name).bib
 	pdflatex -output-directory build/ $(name)
 	pdflatex -output-directory build/ $(name)
 	mv build/$(name).pdf .
+polyglot: polyglot/$(name).pdf
+polyglot/$(attach).zip: FORCE
+	mkdir -p polyglot
+	zip -r polyglot/$(attach).zip $(attach)
+polyglot/$(name).pdf: $(name).pdf polyglot/$(attach).zip
+	cat $(name).pdf polyglot/$(attach).zip > polyglot/$(name).pdf
+	zip -A polyglot/$(name).pdf
+distribute: distclean all polyglot
+	cp polyglot/$(name).pdf .
 clean:
 	rm -rf build
 distclean: clean
+	rm -rf polyglot
 	rm -f $(name).pdf
-.PHONY: all clean
+.PHONY: all view clean distclean
+FORCE:
