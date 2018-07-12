@@ -7,6 +7,7 @@ sections := $(wildcard sections/*.tex)
 all: $(name).pdf
 view: $(name).pdf
 	$(viewer) $(name).pdf
+
 $(name).pdf: $(name).tex $(sections) $(name).bib
 	mkdir -p build
 	pdflatex -output-directory build/ $(name)
@@ -14,6 +15,7 @@ $(name).pdf: $(name).tex $(sections) $(name).bib
 	pdflatex -output-directory build/ $(name)
 	pdflatex -output-directory build/ $(name)
 	mv build/$(name).pdf .
+
 polyglot: polyglot/$(name).pdf
 polyglot/$(attach).zip: FORCE
 	mkdir -p polyglot
@@ -23,6 +25,7 @@ polyglot/$(name).pdf: $(name).pdf polyglot/$(attach).zip
 	zip -A polyglot/$(name).pdf
 distribute: distclean all polyglot
 	cp polyglot/$(name).pdf .
+
 clean:
 	rm -rf build
 distclean: clean
