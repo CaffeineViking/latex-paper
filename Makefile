@@ -26,6 +26,9 @@ polyglot/$(name).pdf: $(name).pdf polyglot/$(attach).zip
 distribute: distclean all polyglot
 	cp polyglot/$(name).pdf .
 
+sign: $(name).pdf # Sign the document for validity...
+	gpg --output $(name).sig --detach-sig $(name).pdf
+
 clean:
 	rm -rf build
 distclean: clean
